@@ -32,6 +32,12 @@ body{
   text-align: center;
 }
 
+.total-presupuesto{
+  font-size: 2rem;
+  font-weight: 600;
+  color: #00171f;
+}
+
 .card-1{
   display: flex;
   justify-content: space-between;

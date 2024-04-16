@@ -36,15 +36,14 @@ function obtenerMesActual() {
 
   const fecha = new Date();
   const digitoMes = fecha.getMonth();
+  const anio = fecha.getFullYear();
   const nombreMes = meses[digitoMes];
-  return nombreMes;
+  return `${nombreMes} ${anio}`;
 }
 
 //Mostrar mes en el DOM
 const mesActual = obtenerMesActual();
-console.log(mesActual);
-document.getElementById("mesActual").innerHTML = mesActual;
-
+document.getElementById("mesActual").innerHTML = `${mesActual}`;
 
 //Variables que almacenan el total de ingresos y egresos
 var totalIngresos = 0;
@@ -57,7 +56,6 @@ function agregarTransaccion() {
 
   if (tipo === "" || descripcion === "" || cantidad === "") {
     alert("Por favor, completa todos los campos");
-    console.log(typeof(cantidad));
     return;
   }
   //Crear la card
@@ -65,22 +63,30 @@ function agregarTransaccion() {
   tarjeta.classList.add("card-transacciones");
 
   //Convertir número proveniente del input a 2 decimales
-  let numero = parseFloat(cantidad).toFixed(2);
-  let proof = typeof(numero);
-  console.log(proof);
+  let auxiliar = parseFloat(cantidad).toFixed(2);
+  let numero = parseFloat(auxiliar);
 
   //Agregar la card al contenedor correspondiente
   if (tipo === "ingreso") {
     tarjeta.innerHTML = `<p>${descripcion}</p>
-                        <p>+ $${numero}</p>`;
+                        <p>+ $${auxiliar}</p>`;
     document.getElementById("contenedor-ingresos").appendChild(tarjeta);
     totalIngresos += numero;
   } else if (tipo === "egreso") {
     tarjeta.innerHTML = `<p>${descripcion}</p>
-                        <p>- $${numero}</p>`;
+                        <p>- $${auxiliar}</p>`;
     document.getElementById("contenedor-egresos").appendChild(tarjeta);
     totalEgresos += numero;
   }
+  
+  let totalPresupuesto = totalIngresos - totalEgresos;
+  let porcentaje = (totalEgresos / totalIngresos) * 100;
+
+  //Actualizar los campos en el DOM
+  document.getElementById("ingresos").innerHTML = `$${totalIngresos.toFixed(2)}`;
+  document.getElementById("egresos").innerHTML = `$${totalEgresos.toFixed(2)}`;
+  document.getElementById("total-presupuesto").innerHTML = `$${totalPresupuesto.toFixed(2)}`;
+  document.getElementById("porcentaje").innerHTML = `${Math.round(porcentaje)}%` ;
 
   //Reiniciar los input
   document.getElementById("descripcion").value = "";
@@ -88,5 +94,4 @@ function agregarTransaccion() {
 
   console.log("Total de ingresos: ", totalIngresos);
   console.log("Total de egresos: ", totalEgresos);
-
 }
