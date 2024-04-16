@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="main.js"></script>
+    <title>Finanzas</title>
+</head>
+<body>
+    <section class="main-section">
+        <div>
+            <h1 id="main-title">Presupuesto de</h1>
+            <span id="mesActual"></span>
+            <p>500.00</p>
+        </div>
+        <div class="card-1 card-ingresos">
+            <h2 class="card-1-titulo">Ingresos</h2>
+            <span class="cantidad">800</span>
+        </div>
+        <div class="card-1 card-egresos">
+            <h2 class="card-1-titulo">Egresos</h2>
+            <span class="cantidad">300</span>
+        </div>
+        <div class="container-porcentaje">
+            <span>Porcentaje de gastos:</span>
+            <span class="porcentaje">12%</span>
+        </div>
+    </section>
+
+    <section class="secondary-section">
+        <div class="añadir-transaccion">
+            <div class="añadir-transaccion-titulo">
+                <h3><span class="add">+</span>Transacción</h3>
+            </div>
+            <select id="tipoTransaccion">
+                <option value="" disabled selected>Ingreso | Egreso</option>
+                <option value="ingreso">Ingreso</option>
+                <option value="egreso">Egreso</option>
+            </select>
+            <input id="descripcion" type="text" placeholder="Descripción">
+            <input id="cantidad" type="number" min="1" placeholder="Monto">
+            <button class="btn-agregar" onclick="agregarTransaccion()">Agregar</button>
+        </div>
+    
+        <div class="lista-transacciones">
+            <div class="btn-group">
+                <button id="btn-ingresos" class="active" onclick="mostrarContenido('ingresos')">Ingresos</button>
+                <button id="btn-egresos" onclick="mostrarContenido('egresos')">Egresos</button>
+            </div>
+    
+            <div id="contenedor-ingresos" class="contenido visible">
+                <div class="card-transacciones">
+                    <p>Salario 1</p>
+                    <p>+ 400.00</p>
+                </div>
+                <div class="card-transacciones">
+                    <p>Remesa</p>
+                    <p>+ 400.00</p>
+                </div>
+                <div class="card-transacciones">
+                    <p>Venta de ropa</p>
+                    <p>+ 100.00</p>
+                </div>
+            </div>
+    
+            <div id="contenedor-egresos" class="contenido oculto">
+                <div class="card-transacciones">
+                    <p>Ropa</p>
+                    <p>- 100.00</p>
+                </div>
+                <div class="card-transacciones">
+                    <p>Cumpleaños hermano</p>    
+                    <p>- 50.00</p>
+                </div>
+                <div class="card-transacciones">
+                    <p>Mercado semanal</p>
+                    <p>- 125.00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
