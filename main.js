@@ -1,23 +1,3 @@
-function mostrarContenido(tipo) {
-  if (tipo === "ingresos") {
-    document.getElementById("contenedor-ingresos").classList.add("visible");
-    document.getElementById("contenedor-ingresos").classList.remove("oculto");
-    document.getElementById("contenedor-egresos").classList.add("oculto");
-    document.getElementById("contenedor-egresos").classList.remove("visible");
-
-    document.getElementById("btn-ingresos").classList.add("active");
-    document.getElementById("btn-egresos").classList.remove("active");
-  } else if (tipo === "egresos") {
-    document.getElementById("contenedor-egresos").classList.add("visible");
-    document.getElementById("contenedor-egresos").classList.remove("oculto");
-    document.getElementById("contenedor-ingresos").classList.add("oculto");
-    document.getElementById("contenedor-ingresos").classList.remove("visible");
-
-    document.getElementById("btn-egresos").classList.add("active");
-    document.getElementById("btn-ingresos").classList.remove("active");
-  }
-}
-
 function obtenerMesActual() {
   const meses = [
     "Enero",
@@ -50,15 +30,22 @@ var totalIngresos = 0;
 var totalEgresos = 0;
 
 function agregarTransaccion() {
+  //Obtenemos los valores de los elementos
   var tipo = document.getElementById("tipoTransaccion").value;
   var descripcion = document.getElementById("descripcion").value;
   var cantidad = document.getElementById("cantidad").value;
 
+  //Validamos que los campos no esten vacíos
   if (tipo === "" || descripcion === "" || cantidad === "") {
-    alert("Por favor, completa todos los campos");
+    //Mostrar alerta de error
+    Swal.fire({
+      title: "Error",
+      text: "Debe llenar todos los campos.",
+      icon: "error",
+    });
     return;
   }
-  //Crear la card
+  //Crear la card de transacción que se agregará al DOM 
   var tarjeta = document.createElement("div");
   tarjeta.classList.add("card-transacciones");
 
@@ -71,14 +58,17 @@ function agregarTransaccion() {
     tarjeta.innerHTML = `<p>${descripcion}</p>
                         <p>+ $${auxiliar}</p>`;
     document.getElementById("contenedor-ingresos").appendChild(tarjeta);
+    //sumar cantidad al total de ingresos
     totalIngresos += numero;
   } else if (tipo === "egreso") {
     tarjeta.innerHTML = `<p>${descripcion}</p>
                         <p>- $${auxiliar}</p>`;
     document.getElementById("contenedor-egresos").appendChild(tarjeta);
+    //sumar cantidad al total de egresos
     totalEgresos += numero;
   }
   
+  //Calcular el total y porcentaje de gastos
   let totalPresupuesto = totalIngresos - totalEgresos;
   let porcentaje = (totalEgresos / totalIngresos) * 100;
 
@@ -92,6 +82,31 @@ function agregarTransaccion() {
   document.getElementById("descripcion").value = "";
   document.getElementById("cantidad").value = "";
 
-  console.log("Total de ingresos: ", totalIngresos);
-  console.log("Total de egresos: ", totalEgresos);
+  //Mostrar alerta de transacción exitosa
+  Swal.fire({
+    title: "Transacción exitosa",
+    text: `Su ${tipo} ha sido agregado correctamente.`,
+    icon: "success",
+  });
+}
+
+//Actualiza el contenido en el DOM según el tipo de transacción
+function mostrarContenido(tipo) {
+  if (tipo === "ingresos") {
+    document.getElementById("contenedor-ingresos").classList.add("visible");
+    document.getElementById("contenedor-ingresos").classList.remove("oculto");
+    document.getElementById("contenedor-egresos").classList.add("oculto");
+    document.getElementById("contenedor-egresos").classList.remove("visible");
+
+    document.getElementById("btn-ingresos").classList.add("active");
+    document.getElementById("btn-egresos").classList.remove("active");
+  } else if (tipo === "egresos") {
+    document.getElementById("contenedor-egresos").classList.add("visible");
+    document.getElementById("contenedor-egresos").classList.remove("oculto");
+    document.getElementById("contenedor-ingresos").classList.add("oculto");
+    document.getElementById("contenedor-ingresos").classList.remove("visible");
+
+    document.getElementById("btn-egresos").classList.add("active");
+    document.getElementById("btn-ingresos").classList.remove("active");
+  }
 }
