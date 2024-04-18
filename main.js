@@ -23,7 +23,7 @@ function obtenerMesActual() {
 
 //Mostrar mes en el DOM
 const mesActual = obtenerMesActual();
-document.getElementById("mesActual").innerHTML = `${mesActual}`;
+document.getElementById("mes-actual").innerHTML = `${mesActual}`;
 
 //Variables que almacenan el total de ingresos y egresos
 var totalIngresos = 0;
@@ -58,17 +58,19 @@ function agregarTransaccion() {
     tarjeta.innerHTML = `<p>${descripcion}</p>
                         <p>+ $${auxiliar}</p>`;
     document.getElementById("contenedor-ingresos").appendChild(tarjeta);
-    //sumar cantidad al total de ingresos
+    //Sumar cantidad al total de ingresos
     totalIngresos += numero;
   } else if (tipo === "egreso") {
+    //Calcular el porcentaje individual que representa la transacción sobre el total de ingresos
+    let porcentajeEgreso = (numero*100) / totalIngresos;
     tarjeta.innerHTML = `<p>${descripcion}</p>
-                        <p>- $${auxiliar}</p>`;
+                        <p>- $${auxiliar} <span class="porcentaje">${Math.round(porcentajeEgreso)}%</span></p>`;
     document.getElementById("contenedor-egresos").appendChild(tarjeta);
-    //sumar cantidad al total de egresos
+    //Sumar cantidad al total de egresos
     totalEgresos += numero;
   }
   
-  //Calcular el total y porcentaje de gastos
+  //Calcular el total y porcentaje total de gastos
   let totalPresupuesto = totalIngresos - totalEgresos;
   let porcentaje = (totalEgresos / totalIngresos) * 100;
 
