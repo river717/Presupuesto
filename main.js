@@ -60,6 +60,7 @@ function agregarTransaccion() {
     document.getElementById("contenedor-ingresos").appendChild(tarjeta);
     //Sumar cantidad al total de ingresos
     totalIngresos += numero;
+    document.getElementById("label-ingreso").classList.add("hidden");
   } else if (tipo === "egreso") {
     //Calcular el porcentaje individual que representa la transacción sobre el total de ingresos
     let porcentajeEgreso = (numero*100) / totalIngresos;
@@ -68,6 +69,7 @@ function agregarTransaccion() {
     document.getElementById("contenedor-egresos").appendChild(tarjeta);
     //Sumar cantidad al total de egresos
     totalEgresos += numero;
+    document.getElementById("label-egreso").classList.add("hidden");
   }
   
   //Calcular el total y porcentaje total de gastos
@@ -112,3 +114,6 @@ function mostrarContenido(tipo) {
     document.getElementById("btn-ingresos").classList.remove("active");
   }
 }
+
+//Validar datos de Monto (no negativos ni cero y enviar respectivas validaciones)
+//Problemas de scroll cuando hayan 5 o 6 tarjetas habilitar el scroll

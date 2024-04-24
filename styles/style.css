@@ -20,14 +20,22 @@ body{
   width: 100vw;
 }
 
+.container-section{
+  width: 100vw;
+  height: 50vh;
+  background-image: url('../img/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
 .main-section{
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 15px;
-  background-color: #f5f7fa;
+  backdrop-filter: blur(12px);
   align-items: center;
-  height: 50vh;
+  height: 100%;
   border: 2px solid #dbdbdb;
   text-align: center;
 }
@@ -81,7 +89,7 @@ body{
   gap: 25px;
   font-size: 1rem;
   font-weight: 700;
-  color: #00171f;
+  color: #fff;
 }
 
 .porcentaje{
@@ -89,7 +97,7 @@ body{
   color: #fff;
   font-weight: 500;
   font-size: 0.9rem;
-  padding: 5px 10px;
+  padding: 5px 10px 7.5px 10px;
   border-radius: 10px;
 }
 
@@ -182,4 +190,12 @@ button.active {
   font-size: 1rem;
   font-weight: 600;
   color: #00171f;
+}
+
+.label{
+  color: #999;
+}
+
+.hidden{
+  display: none;
 }
