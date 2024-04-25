@@ -45,6 +45,16 @@ function agregarTransaccion() {
     });
     return;
   }
+
+  //Validamos que el monto sea positivo
+  if(cantidad <= 0){
+    Swal.fire({
+      title: "Error",
+      text: "El monto no puede ser negativo o cero. Debe introducir una cantidad positiva para registrar la transacción.",
+      icon: "error",
+    });
+    return;
+  }
   //Crear la card de transacción que se agregará al DOM 
   var tarjeta = document.createElement("div");
   tarjeta.classList.add("card-transacciones");
@@ -55,23 +65,37 @@ function agregarTransaccion() {
 
   //Agregar la card al contenedor correspondiente
   if (tipo === "ingreso") {
+    totalIngresos += numero; //Sumar cantidad al total de ingresos
     tarjeta.innerHTML = `<p>${descripcion}</p>
                         <p>+ $${auxiliar}</p>`;
     document.getElementById("contenedor-ingresos").appendChild(tarjeta);
-    //Sumar cantidad al total de ingresos
-    totalIngresos += numero;
     document.getElementById("label-ingreso").classList.add("hidden");
   } else if (tipo === "egreso") {
-    //Calcular el porcentaje individual que representa la transacción sobre el total de ingresos
-    let porcentajeEgreso = (numero*100) / totalIngresos;
+    totalEgresos += numero; //Sumar cantidad al total de egresos
+    if(totalIngresos === 0){
+      Swal.fire({
+        title: "Error",
+        text: `Debe registrar primero sus ingresos.`,
+        icon: "error",
+      });
+      totalEgresos = 0;
+      return;
+    } else if(totalEgresos > totalIngresos){
+      Swal.fire({
+        title: "Cantidad no disponible",
+        text: `No tiene presupuesto suficiente para cubrir el siguiente gasto: ${descripcion}`,
+        icon: "error",
+      });
+      totalEgresos -= numero;
+      return;
+    }
+    let porcentajeEgreso = (numero*100) / totalIngresos; //Calcular el porcentaje individual que representa la transacción sobre el total de ingresos
     tarjeta.innerHTML = `<p>${descripcion}</p>
                         <p>- $${auxiliar} <span class="porcentaje">${Math.round(porcentajeEgreso)}%</span></p>`;
     document.getElementById("contenedor-egresos").appendChild(tarjeta);
-    //Sumar cantidad al total de egresos
-    totalEgresos += numero;
     document.getElementById("label-egreso").classList.add("hidden");
   }
-  
+
   //Calcular el total y porcentaje total de gastos
   let totalPresupuesto = totalIngresos - totalEgresos;
   let porcentaje = (totalEgresos / totalIngresos) * 100;
